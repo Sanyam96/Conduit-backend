@@ -7,6 +7,9 @@ const {
 const {
     article
 } = require('./article')
+const {
+    comment
+} = require('./comment')
 const db = new Sequelize({
     dialect: 'sqlite',
     storage: __dirname + '/store.db'
@@ -15,10 +18,16 @@ const db = new Sequelize({
 
 const User = db.define('user', user)
 const Article = db.define('article', article)
+const Comment = db.define('comment', comment)
 
 Article.belongsTo(User)
 User.hasMany(Article)
 
+Comment.belongsTo(User)
+User.hasMany(Comment)
+
+Comment.belongsTo(Article)
+Article.hasMany(Comment)
 
 User.prototype.generateJwtToken = function () {
     return jwt.sign({
@@ -65,10 +74,24 @@ Article.prototype.toSendJSONArray = function () {
         }
     }
 }
+Comment.prototype.toSendJSONArray = function () {
 
+    return {
+        id: this.comment,
+        createdAt: this.createdAt,
+        updatedAt: this.updatedAt,
+        body: this.body,
+        author: {
+            username: this.user.username,
+            bio: this.user.bio,
+            image: this.user.image,
+        }
+    }
+}
 
 module.exports = {
     db,
     User,
-    Article
+    Article,
+    Comment
 }

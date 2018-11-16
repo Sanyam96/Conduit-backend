@@ -1,6 +1,7 @@
 const Sequelize = require("sequelize");
 const DT = Sequelize.DataTypes;
- module.exports = {
+
+module.exports = {
     user: {
         username: {
             type: DT.STRING(50),
@@ -18,7 +19,7 @@ const DT = Sequelize.DataTypes;
             unique: true
         },
         token: {
-            type : DT.STRING(50),
+            type: DT.STRING(500)
         }
     }
-}; 
+};

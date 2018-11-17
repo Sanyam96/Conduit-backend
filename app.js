@@ -17,8 +17,8 @@ app.use('/api', require('./api/index.js'))
 db.sync()
     .then(() => {
         console.log('Database Synced')
-        app.listen(2399, () => {
-            console.log('Server started http://localhost:2399')
+        app.listen(9999, () => {
+            console.log('Server started http://localhost:9999')
         })
     })
     .catch(console.error)
